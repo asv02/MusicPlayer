@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HelpingBuddy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="spotift.css">
+</head>
+
+<body class="body">
+    <nav class="navigation">
+        <img src="brand.png" alt="HelpingBuddy">
+        <ul class="navigate">
+            <li><a href="#">HOME</a></li>
+            <li><a href="#">PLAYLIST</a></li>
+            <li><a href="#">FAVOURITE</a></li>
+            <li><a href="#">HELP</a></li>
+            <li><a href="#">ABOUT US</a></li>
+        </ul>
+        <input type="text">
+        <button class="btn">Search</button>
+    </nav>
+    <div class="contain">
+        <div class="songlist">
+            <h3 style="background-color: #b9a57b;
+            width: 40%;
+            border-radius: 12px;
+">Akash Suryavanshi PlayList:</h3>
+            <ul class="songs">
+                <li class="item"><img src="letmelove.jpg" alt="Let me love you" class="itemimg"><span
+                        class="dur">3:00</span> <span class="s1"><i id="1" class="smallPlay fa fa-play-circle"
+                            aria-hidden="true"></i><span class="s2">Let me
+                            Love
+                            you.</span></span></li>
+                <li class="item"><img src="boyfriend.jpg" alt="Boyfriend" class="itemimg"><span class="dur">3:00</span>
+                    <span class="s1"><i id="2" class="smallPlay fa fa-play-circle" aria-hidden="true"></i><span
+                            class="s2">Boyfriend</span></span>
+                </li>
+                <li class="item"><img src="siya ke ram.jpg" alt="siya ke ram" class="itemimg"><span
+                        class="dur">3:00</span> <span class="s1"><i id="3" class="smallPlay fa fa-play-circle"
+                            aria-hidden="true"></i><span class="s2">Ram
+                            siya ram
+                            siya
+                            ram</span></span></li>
+                <li class="item"><img src="shopping.jpg" alt="Shopping" class="itemimg"><span class="dur">3:00</span>
+                    <span class="s1"><i id="4" class="smallPlay fa fa-play-circle" aria-hidden="true"></i><span
+                            class="s2">Shopping</span></span>
+                </li>
+                <li class="item"><img src="rollin.jpg" alt="We Rollin" class="itemimg"><span class="dur">3:00</span>
+                    <span class="s1"><i id="5" class="smallPlay fa fa-play-circle" aria-hidden="true"></i><span
+                            class="s2">We
+                            Rollin</span></span>
+                </li>
+            </ul>
+            <img src="pair.gif" alt="paair" id="gif1">
+        </div>
+        <div class="songBanner"></div>
+    </div>
+    <!-- Bottom -->
+    <div class="bottom">
+        <input type="range" id="seekbar" value='0' min="0" max="100">
+        <div class="icons">
+            <i class="fas fa-step-backward"></i>
+            <i id="playing" class="fa fa-play-circle" aria-hidden="true"></i>
+            <i class="fas fa-step-forward"></i>
+        </div>
+        <div class="songInfo">
+            <img src="music1.gif" alt="Music" class="gif2">
+            <span id="Songnaam">Let Me Love You-Justin Bieber.</span>
+            <img src="music1.gif" alt="Music" class="gif2">
+        </div>
+        <span id="time">00:00</span>
+        <script src="https://kit.fontawesome.com/717367c971.js" crossorigin="anonymous"></script>
+    </div>
+    <script>
+        const time = document.getElementById('time');
+        let array = [
+            {},
+            {
+                SongName: 'Let Me love you-Arjit Singh', coverPath: 'letmelove.jpg',
+                path: new Audio('s-1.mp3')
+            },
+            {
+                SongName: 'Boyfriend-Justin Bieber', coverPath: 'boyfriend.jpg',
+                path: new Audio('s-2.mp3')
+            },
+            {
+                SongName: 'Siya Ke Ram-Unknown', coverPath: 'siya ke ram.jpg',
+                path: new Audio('s-3.mp3')
+            },
+            {
+                SongName: 'Shopping-Jass Manak', coverPath: 'shopping.jpg',
+                path: new Audio('s-4.mp3')
+            },
+            {
+                SongName: 'We Rollin-Subh', coverPath: 'rollin.jpg',
+                path: new Audio('s-5.mp3')
+            }
+        ]
+        let image = document.getElementsByClassName('itemimg');
+        let songnaam = document.getElementById('Songnaam');
+        let Items = document.getElementsByClassName('item');
+        let seek = document.getElementById('seekbar');
+        let dura = Array.from(document.getElementsByClassName('dur'));
+        let img1 = document.getElementById('gif1');
+        let img2 = document.getElementsByClassName('gif2');
+
+        let index = document.getElementsByClassName('smallPlay')
+        let songName = new Audio('s-1.mp3');
+        let songINdex = 0;
+        //Play by small plays..............
+        function playall() {
+            for (let z = 0; z < index.length; z++) {
+                index[z].classList.add('fa-play-circle');//Small playing button  working properly.
+            }
+        }
+        for (let j = 0; j < index.length; j++) {
+            index[j].addEventListener('click', (e) => {
+                playall();
+                if (songName.paused || songName.currentTime <= 0) {
+                    e.target.classList.remove('fa-play-circle');
+                    e.target.classList.add('fa-pause-circle');
+                    songINdex = parseInt(e.target.id);
+                    songName.src = `s-${songINdex}.mp3`;
+                    songName.currentTime = 0;
+                    songName.play();
+                    masterPlay.classList.remove('fa-play-circle');
+                    masterPlay.classList.add('fa-pause-circle');
+                    img1.style.opacity = 1;
+                    img2[0].style.opacity = 1;
+                    img2[1].style.opacity = 1;
+                    songnaam.innerHTML = array[songINdex].SongName;// Not added the name at bottom // songnaam.textContent.
+                    songName.addEventListener('timeupdate', () => {
+                        time.innerHTML = songName.currentTime;
+                    })
+                }
+                else {
+                    e.target.classList.remove('fa-pause-circle');
+                    e.target.classList.add('fa-play-circle');
+                    img1.style.opacity = 1;
+                    img2[0].style.opacity = 0;
+                    img2[1].style.opacity = 0;
+                    songName.pause();
+                }
+            });
+        }
+        //Play by MasterPlay Button//
+        let masterPlay = document.getElementById('playing');
+        masterPlay.addEventListener('click', () => {
+            if (songName.paused || songName.currentTime <= 0) {
+                songName.play();
+                masterPlay.classList.remove('fa-play-circle');
+                masterPlay.classList.add('fa-pause-circle');
+                img1.style.opacity = 1;
+                img2[0].style.opacity = 1;
+                img2[1].style.opacity = 1;
+                songName.addEventListener('timeupdate', () => {
+                    time.innerHTML = songName.currentTime;
+                })
+            }
+            else {
+                songName.pause();
+                masterPlay.classList.remove('fa-pause-circle');
+                masterPlay.classList.add('fa-play-circle');
+                img1.style.opacity = 0;
+                img2[0].style.opacity = 0;
+                img2[1].style.opacity = 0;
+                for (let z = 0; z < index.length; z++) {
+                    index[z].classList.add('fa-play-circle');
+                }
+            }
+        });
+        //seekbaar Value
+        songName.addEventListener('timeupdate', () => {
+            progress = ((songName.currentTime / songName.duration) * 100);
+            seek.value = progress;
+        });
+        // seekbaar 
+        seek.addEventListener('change', () => {
+            songName.currentTime = (((seek.value) * (songName.duration)) / 100);
+        });
+        //Duration in SongList----Not working properly
+        for (let i = 0; i < dura.length; i++) {
+            dura[i].textContent = `~${Math.floor((array[i + 1].path.duration) / 60)} minutes`;
+            console.log(dura[i].textContent);
+        }
+        //Forward Button
+        let next = document.getElementsByClassName('fas fa-step-forward');
+        next[0].addEventListener('click', () => {
+            if (songINdex >= index.length) {
+                songINdex = 1;
+            }
+            else {
+                songINdex = (songINdex + 1);
+            }
+            songnaam.innerHTML = array[songINdex].SongName;
+            songName.src = `s-${songINdex}.mp3`;
+            songName.currentTime = 0;
+            songName.play();
+        });
+        //Backward Button
+        let previous = document.getElementsByClassName('fas fa-step-backward');
+        previous[0].addEventListener('click', () => {
+            if (songINdex <= 1) {
+                songINdex = index.length;
+            }
+            else { songINdex = songINdex - 1; }
+            songnaam.innerHTML = array[songINdex].SongName;
+            songName.src = `s-${songINdex}.mp3`;
+            songName.currentTime = 0;
+            songName.play();
+        });
+    </script>
+</body>
+
+</html>
